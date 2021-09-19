@@ -1,0 +1,79 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  height: 100vh;
+  padding: 50px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  display: block;
+  width: 400px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+.list {
+  padding-left: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+.input-list li {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.country_name {
+  text-align: center;
+  font-size: 52px;
+  margin-top: 120px;
+  list-style-type: none;
+}
+
+.country_card {
+  display: flex;
+  justify-content: center;
+}
+
+.country_content {
+  margin-right: 60px;
+}
+
+.country_text {
+  font-size: 32px;
+}
+
+.country_text-title {
+  font-weight: bold;
+}
+
+.country_languages-list {
+  font-size: 22px;
+  padding-left: 60px;
+}
+
+.flag_img {
+  width: 30%;
+}
