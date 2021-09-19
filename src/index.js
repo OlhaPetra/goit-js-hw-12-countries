@@ -2,7 +2,7 @@ import fetchCountries from './js/fetchCountries.js';
 import oneCounrtyArticle from './tamplates/oneCounrtyArticleTempl.hbs';
 import countriesList from './tamplates/countriesListTempl.hbs';
 import refs from './js/refs.js';
-const { input, list } = refs
+const { input, list, article } = refs
 
 import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
@@ -17,6 +17,7 @@ input.addEventListener('input', debounce(onSearch, 500));
 function onSearch(e) {
   e.preventDefault();
   list.innerHTML = '';
+  article.innerHTML = '';
 
   fetchCountries(e.target.value)
     .then(data => {
@@ -42,7 +43,7 @@ function errorSearch() {
 }
 
 function counrtyArticleMarkup(countries) {
-  list.insertAdjacentHTML('beforeend', oneCounrtyArticle(countries));
+  article.insertAdjacentHTML('beforeend', oneCounrtyArticle(countries));
 }
 function countriesListMarkup(countries) {
   list.insertAdjacentHTML('beforeend', countriesList(countries));

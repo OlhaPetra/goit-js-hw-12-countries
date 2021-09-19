@@ -45,6 +45,12 @@ body {
   margin-bottom: 10px;
 }
 
+.country_list {
+  margin-left: 650px;
+  margin-top: 30px;
+  font-size: 32px;
+}
+
 .country_name {
   text-align: center;
   font-size: 52px;
