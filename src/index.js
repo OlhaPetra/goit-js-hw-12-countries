@@ -1,6 +1,6 @@
 import fetchCountries from './js/fetchCountries.js';
-import oneCounrty from './js/tamplates/oneCountryTemplate.hbs';
-import tenCounrties from './js/tamplates/tenCountriesTemplate.hbs';
+import oneCounrtyArticle from './tamplates/oneCounrtyArticleTempl.hbs';
+import countriesList from './tamplates/countriesListTempl.hbs';
 
 import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
@@ -19,18 +19,35 @@ function onSearch(e) {
   e.preventDefault();
 
   fetchCountries(e.target.value)
-    .then(countriesTempl)
-    .catch(errorSearch)
+      .then(data => {
+      if (data.length === 1) {
+        counrtyArticleMarkup(data);
+      } else if (data.length <= 10) {
+        countriesListMarkup(data);
+      } else if (data.length > 10) {
+        errorSearch();
+      } 
+    })
+      .catch(err => {
+        console.log(err)
+      if (err.message === '404') {
+        errorSearch();
+      }
+    })
     .finally((e.target.value = ''));
 }
 
-function errorSearch(err) {
-  console.log(err);
-  if (err === '404') {
-    error({ text: 'Too many matches found. Please enter a more specific query!' });
-  }
+function errorSearch() {
+  error({ text: 'Too many matches found. Please enter a more specific query!' });
 }
 
-function countriesTempl(countries) {
-  list.insertAdjacentHTML('beforeend', oneCounrty(countries));
+function counrtyArticleMarkup(countries) {
+  list.insertAdjacentHTML('beforeend', oneCounrtyArticle(countries));
 }
+function countriesListMarkup(countries) {
+  list.insertAdjacentHTML('beforeend', countriesList(countries));
+}
+
+function clearCountrySearch() {
+  list.insertAdjacentHTML('beforeend', oneCounrtyArticle(countries));
+} 
