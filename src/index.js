@@ -2,7 +2,7 @@ import fetchCountries from './js/fetchCountries.js';
 import oneCounrtyArticle from './tamplates/oneCounrtyArticleTempl.hbs';
 import countriesList from './tamplates/countriesListTempl.hbs';
 import refs from './js/refs.js';
-const { input, list, article } = refs
+const { input, list, article } = refs;
 
 import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
@@ -12,14 +12,15 @@ defaultModules.set(PNotifyMobile, {});
 
 const debounce = require('lodash.debounce');
 
-input.addEventListener('input', debounce(onSearch, 1000));
+input.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(e) {
   e.preventDefault();
-  list.innerHTML = '';
-  article.innerHTML = '';
-
-  fetchCountries(e.target.value.trim())
+  clearArticlesContainer();
+  let seachQuery = e.target;
+  console.log(seachQuery)
+  
+  fetchCountries(seachQuery.value.trim())
     .then(data => {
       if (data.length === 1) {
         counrtyArticleMarkup(data);
@@ -29,9 +30,11 @@ function onSearch(e) {
         errorSearch();
       }
     })
-    .catch(err => { errorSearch() })
-  
-  /* fetchCountries.reset() */
+    .catch(error => {
+      errorSearch();
+    }).finally(() => 
+     seachQuery.reset()
+    )
 }
 
 function errorSearch() {
@@ -43,4 +46,8 @@ function counrtyArticleMarkup(countries) {
 }
 function countriesListMarkup(countries) {
   list.insertAdjacentHTML('beforeend', countriesList(countries));
+}
+function clearArticlesContainer() {
+  list.innerHTML = '';
+  article.innerHTML = '';
 }
