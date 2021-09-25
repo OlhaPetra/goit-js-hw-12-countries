@@ -2,7 +2,7 @@ import fetchCountries from './js/fetchCountries.js';
 import oneCounrtyArticle from './tamplates/oneCounrtyArticleTempl.hbs';
 import countriesList from './tamplates/countriesListTempl.hbs';
 import refs from './js/refs.js';
-const { list, article, form } = refs;
+const { list, article, form, input } = refs;
 
 import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
@@ -12,15 +12,15 @@ defaultModules.set(PNotifyMobile, {});
 
 const debounce = require('lodash.debounce');
 
-form.addEventListener('input', debounce(onSearch, 500));
+input.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(e) {
   e.preventDefault();
   clearArticlesContainer();
-  let seachQuery = e.target;
+  const seachQuery = e.target.value;
   console.log(seachQuery)
   
-  fetchCountries(seachQuery.value.trim())
+  fetchCountries(seachQuery.trim())
     .then(data => {
       if (data.length === 1) {
         counrtyArticleMarkup(data);
@@ -32,8 +32,10 @@ function onSearch(e) {
     })
     .catch(error => {
       errorSearch();
-    }).finally(() => 
-     form.reset()
+    }).finally(() =>
+      () => {
+        seachQuery = '';
+      }
     )
 }
 
