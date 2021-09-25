@@ -16,8 +16,9 @@ input.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(e) {
   e.preventDefault();
-  clearArticlesContainer();
   const seachQuery = e.target.value;
+  
+clearArticlesContainer();
   console.log(seachQuery)
   
   fetchCountries(seachQuery.trim())
@@ -32,11 +33,7 @@ function onSearch(e) {
     })
     .catch(error => {
       errorSearch();
-    }).finally(() =>
-      () => {
-        seachQuery = '';
-      }
-    )
+    })
 }
 
 function errorSearch() {
