@@ -12,14 +12,14 @@ defaultModules.set(PNotifyMobile, {});
 
 const debounce = require('lodash.debounce');
 
-input.addEventListener('input', debounce(onSearch, 500));
+input.addEventListener('input', debounce(onSearch, 1000));
 
 function onSearch(e) {
   e.preventDefault();
   list.innerHTML = '';
   article.innerHTML = '';
 
-  fetchCountries(e.target.value)
+  fetchCountries(e.target.value.trim())
     .then(data => {
       if (data.length === 1) {
         counrtyArticleMarkup(data);
@@ -29,13 +29,9 @@ function onSearch(e) {
         errorSearch();
       }
     })
-    .catch(err => {
-      console.log(err);
-      if (err.message === '404') {
-        errorSearch();
-      }
-    })
-    .finally((e.target.value = ''));
+    .catch(err => { errorSearch() })
+  
+  /* fetchCountries.reset() */
 }
 
 function errorSearch() {
